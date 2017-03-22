@@ -1,0 +1,132 @@
+#include <iostream>
+#include <windows.h>
+#include <objidl.h>
+#include <gdiplus.h>
+#include<math.h>
+#include<conio.h>
+#include <stdio.h>
+using namespace Gdiplus;
+#pragma comment (lib,"Gdiplus.lib")
+#define pi 3.14151926353
+using namespace std;
+
+
+
+VOID OnPaint(HDC hdc)
+{
+	float a1=1.0, a2=1.0, a3=1.0, a4=1.0, a5=-1.0;
+//	char ch;
+//	cout << "Enter the value of a1,a2,a3,a4,a5 if your function is \n";
+	//cout << " a1*(pow(sin((a2)*x),a3)*(pow(cos((a4)*x),a5)";
+	//cin >> a1 >> a2 >> a3 >> a4 >> a5;    
+/*	cout << "Press y to continue";
+	cin >> ch;
+	if ((ch == 'y') || (ch == 'Y'))
+	{
+		clrscr();
+	}*/
+	Graphics graphics(hdc);
+	
+	Pen pen(Color(255, 0, 0, 255)), pen1(Color(200, 0, 0, 0));
+	for (int i = 0; i < 1100; i++)
+	{
+		Point pt1 = Point(i + 750, 450 - 100 * a1*(pow((float)sin((a2)*i*pi / 180), a3)*(pow((float)cos((a4)*i*pi / 180),a5))));
+		Point pt2 = Point(i + 751, 450 - 100 * a1*(pow((float)sin((a2)*(i + 1)*pi / 180), a3))*(pow((float)cos((a4)*(i + 1)*pi / 180), a5)));
+			graphics.DrawLine(&pen,pt1,pt2);
+	//graphics.DrawLine(&pen, i + 750.0000, 450.0000 - 100 * a1*(pow((double)sin((a2)*i / 180), a3)*(pow((double)cos((a4)*i / 180), a5)), i + 751.0000, 450.0000 - 100 * a1*(pow((double)sin((a2)*(i + 10) / 180), a3))*(pow((float)cos((a4)*(i + 1) / 180), a5))));
+	}
+//	for (int i = 0; i < 1100; i++)
+	/*{
+		graphics.DrawLine(&pen, i + 750, 450 - 100 * tan(i*pi / 180), i + 751, 450 - 100 * tan((i + 1)*pi / 180));
+	}*/
+	for (int i = -1100; i < 0; i++)
+	{
+		Point pt3 = Point(i + 750, 450 - 100 * a1*(pow((float)sin((a2)*i*pi / 180), a3)*(pow((float)cos((a4)*i*pi / 180), a5))));
+		Point pt4 = Point(i + 751, 450 - 100 * a1*(pow((float)sin((a2)*(i + 1)*pi / 180), a3))*(pow((float)cos((a4)*(i + 1)*pi / 180), a5)));
+		graphics.DrawLine(&pen, pt3, pt4);
+		//graphics.DrawLine(&pen, i + 750.0, 450.0 - 100 *a1*(pow((float)sin((a2)*i/180),a3)*(pow((float)cos((a4)*i/180),a5), i + 751.0, 450.0 - 100 *a1*(pow((float)sin((a2)*(i+1)/180),a3))*(pow((float)cos((a4)*(1+i)/180),a5)))));
+	}
+	{
+		graphics.DrawLine(&pen1, 750, 0, 750, 1000);
+		graphics.DrawLine(&pen1, 751, 0, 751, 1001);
+	}
+	{
+		graphics.DrawLine(&pen1, 0, 450, 1800, 450);
+		graphics.DrawLine(&pen1, 0, 451, 1801, 451);
+	}
+
+
+}
+
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
+INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
+{
+	HWND                hWnd;
+	MSG                 msg;
+	WNDCLASS            wndClass;
+	GdiplusStartupInput gdiplusStartupInput;
+	ULONG_PTR           gdiplusToken;
+
+	// Initialize GDI+.
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
+	wndClass.style = CS_HREDRAW | CS_VREDRAW;
+	wndClass.lpfnWndProc = WndProc;
+	wndClass.cbClsExtra = 0;
+	wndClass.cbWndExtra = 0;
+	wndClass.hInstance = hInstance;
+	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wndClass.lpszMenuName = NULL;
+	wndClass.lpszClassName = TEXT("GettingStarted");
+
+	RegisterClass(&wndClass);
+
+	hWnd = CreateWindow(
+		TEXT("GettingStarted"),   // window class name
+		TEXT("Getting Started"),  // window caption
+		WS_OVERLAPPEDWINDOW,      // window style
+		CW_USEDEFAULT,            // initial x position
+		CW_USEDEFAULT,            // initial y position
+		CW_USEDEFAULT,            // initial x size
+		CW_USEDEFAULT,            // initial y size
+		NULL,                     // parent window handle
+		NULL,                     // window menu handle
+		hInstance,                // program instance handle
+		NULL);                    // creation parameters
+
+	ShowWindow(hWnd, iCmdShow);
+	UpdateWindow(hWnd);
+
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	GdiplusShutdown(gdiplusToken);
+	return msg.wParam;
+}  // WinMain
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
+	WPARAM wParam, LPARAM lParam)
+{
+	HDC          hdc;
+	PAINTSTRUCT  ps;
+
+	switch (message)
+	{
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps);
+		OnPaint(hdc);
+		EndPaint(hWnd, &ps);
+		return 0;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+} // WndProc

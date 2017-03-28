@@ -1,0 +1,342 @@
+
+// MFCApplication7Dlg.cpp : implementation file
+//
+
+#include "stdafx.h"
+#include "MFCApplication7.h"
+#include "MFCApplication7Dlg.h"
+#include "afxdialogex.h"
+#include "seconddlg.h"
+
+#include <iostream>
+#include <windows.h>
+#include <objidl.h>
+#include <gdiplus.h>
+#include<math.h>
+#include<conio.h>
+#include <stdio.h>
+using namespace Gdiplus;
+#pragma comment (lib,"Gdiplus.lib")
+#define pi 3.14151926353
+using namespace std;
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+// CAboutDlg dialog used for App About
+
+class CAboutDlg : public CDialogEx
+{
+public:
+	CAboutDlg();
+
+// Dialog Data
+	enum { IDD = IDD_ABOUTBOX };
+
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+
+// Implementation
+protected:
+	DECLARE_MESSAGE_MAP()
+};
+
+CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
+{
+}
+
+void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+}
+
+BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+END_MESSAGE_MAP()
+
+
+// CMFCApplication7Dlg dialog
+
+
+
+CMFCApplication7Dlg::CMFCApplication7Dlg(CWnd* pParent /*=NULL*/)
+	: CDialogEx(CMFCApplication7Dlg::IDD, pParent)
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void CMFCApplication7Dlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+}
+
+BEGIN_MESSAGE_MAP(CMFCApplication7Dlg, CDialogEx)
+	ON_WM_SYSCOMMAND()
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON1, &CMFCApplication7Dlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMFCApplication7Dlg::OnBnClickedButton2)
+END_MESSAGE_MAP()
+
+
+// CMFCApplication7Dlg message handlers
+
+BOOL CMFCApplication7Dlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	// Add "About..." menu item to system menu.
+
+	// IDM_ABOUTBOX must be in the system command range.
+	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
+	ASSERT(IDM_ABOUTBOX < 0xF000);
+
+	CMenu* pSysMenu = GetSystemMenu(FALSE);
+	if (pSysMenu != NULL)
+	{
+		BOOL bNameValid;
+		CString strAboutMenu;
+		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
+		ASSERT(bNameValid);
+		if (!strAboutMenu.IsEmpty())
+		{
+			pSysMenu->AppendMenu(MF_SEPARATOR);
+			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+		}
+	}
+
+	// Set the icon for this dialog.  The framework does this automatically
+	//  when the application's main window is not a dialog
+	SetIcon(m_hIcon, TRUE);			// Set big icon
+	SetIcon(m_hIcon, FALSE);		// Set small icon
+
+	// TODO: Add extra initialization here
+
+	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+void CMFCApplication7Dlg::OnSysCommand(UINT nID, LPARAM lParam)
+{
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
+	{
+		CAboutDlg dlgAbout;
+		dlgAbout.DoModal();
+	}
+	else
+	{
+		CDialogEx::OnSysCommand(nID, lParam);
+	}
+}
+
+// If you add a minimize button to your dialog, you will need the code below
+//  to draw the icon.  For MFC applications using the document/view model,
+//  this is automatically done for you by the framework.
+
+void CMFCApplication7Dlg::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // device context for painting
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// Center icon in client rectangle
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// Draw the icon
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		CDialogEx::OnPaint();
+	}
+}
+
+// The system calls this function to obtain the cursor to display while the user drags
+//  the minimized window.
+HCURSOR CMFCApplication7Dlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+
+void CMFCApplication7Dlg::OnBnClickedButton1()
+{
+	
+		seconddlg Dlg;
+
+		Dlg.DoModal();
+	
+	// TODO: Add your control notification handler code here
+}
+
+
+void CMFCApplication7Dlg::OnBnClickedButton2()
+{
+	
+	VOID OnPaint(HDC);
+//	HDC hdc;
+	//Graphics graphics(hdc);
+	OnPaint();
+
+
+	//INT WINAPI WinMain(HINSTANCE ,HINSTANCE,LPWSTR, INT );
+	/*LRESULT CALLBACK WndProc(HWND , UINT ,
+		WPARAM , LPARAM );
+	HDC hdc;
+	HINSTANCE hInstance1,hInstance2;
+	INT iCmdShow;
+	
+	
+	//WinMain(hInstance1, hInstance2,GetCommandLine() , iCmdShow);
+	HWND hWnd;
+	UINT message;
+
+	WPARAM wParam; LPARAM lParam;
+	WndProc(hWnd, message, wParam, lParam);
+	*/
+    
+}
+VOID OnPaint(HDC hdc)
+{
+	float a1=1 , a2=1 , a3=1, a4=1, a5=1;
+	
+	Graphics graphics(hdc);
+	/*	if (fabs(a2) > fabs(a5))
+	{
+	smal = fabs(a5);
+	large = fabs(a2);
+	}
+	else
+	{
+	smal = fabs(a2);
+	large = fabs(a5);
+	}*/
+
+	Pen pen(Color(255, 0, 0, 255)), pen1(Color(200, 0, 0, 0));
+	if (fabs(a2) == a2)
+	{
+		for (float i = 0.01; i < 1100.0; i += 0.1)
+		{
+			Point pt1 = Point(i + 750, 450 - a1*(pow((float)log(a2*i), a3)*(pow((float)log(a4*i), a5))));
+			Point pt2 = Point(i + 751, 450 - a1*(pow((float)log(a2*(i + 1.0)), a3)*(pow((float)log(a4*(i + 1.0)), a5))));
+			graphics.DrawLine(&pen, pt1, pt2);
+			//graphics.DrawLine(&pen, i + 750.0000, 450.0000 - 100 * a1*(pow((double)sin((a2)*i / 180), a3)*(pow((double)cos((a4)*i / 180), a5)), i + 751.0000, 450.0000 - 100 * a1*(pow((double)sin((a2)*(i + 10) / 180), a3))*(pow((float)cos((a4)*(i + 1) / 180), a5))));
+		}
+	}
+	else
+	{
+		for (float i = -1100.0; i < 0.01; i += 0.1)
+		{
+			Point pt1 = Point(i + 750, 450 - a1*(pow((float)log(a2*i), a3)*(pow((float)log(a4*i), a5))));
+			Point pt2 = Point(i + 751, 450 - a1*(pow((float)log(a2*(i + 1.0)), a3)*(pow((float)log(a4*(i + 1.0)), a5))));
+			graphics.DrawLine(&pen, pt1, pt2);
+			//graphics.DrawLine(&pen, i + 750.0000, 450.0000 - 100 * a1*(pow((double)sin((a2)*i / 180), a3)*(pow((double)cos((a4)*i / 180), a5)), i + 751.0000, 450.0000 - 100 * a1*(pow((double)sin((a2)*(i + 10) / 180), a3))*(pow((float)cos((a4)*(i + 1) / 180), a5))));
+		}
+	}
+	//	for (int i = 0; i < 1100; i++)
+	/*{
+	graphics.DrawLine(&pen, i + 750, 450 - 100 * tan(i*pi / 180), i + 751, 450 - 100 * tan((i + 1)*pi / 180));
+	}*/
+	/*	for (int i = -1100; i < 0; i++)
+	{
+	Point pt3 = Point(i + 750, 450 - 100 * a1*(pow((float)sin((a2)*i*pi / 180), a3)*(pow((float)cos((a4)*i*pi / 180), a5))));
+	Point pt4 = Point(i + 751, 450 - 100 * a1*(pow((float)sin((a2)*(i + 1)*pi / 180), a3))*(pow((float)cos((a4)*(i + 1)*pi / 180), a5)));
+	graphics.DrawLine(&pen, pt3, pt4);
+	//graphics.DrawLine(&pen, i + 750.0, 450.0 - 100 *a1*(pow((float)sin((a2)*i/180),a3)*(pow((float)cos((a4)*i/180),a5), i + 751.0, 450.0 - 100 *a1*(pow((float)sin((a2)*(i+1)/180),a3))*(pow((float)cos((a4)*(1+i)/180),a5)))));
+	}*/
+	{
+		graphics.DrawLine(&pen1, 750, 0, 750, 1000);
+		graphics.DrawLine(&pen1, 751, 0, 751, 1001);
+	}
+	{
+		graphics.DrawLine(&pen1, 0, 450, 1800, 450);
+		graphics.DrawLine(&pen1, 0, 451, 1801, 451);
+	}
+
+
+}
+
+
+	 // WndProc
+
+	// TODO: Add your control notification handler code here
+
+//LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
+/*INT WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hInstance2,LPWSTR Ipconfig, INT iCmdShow)
+{
+	HWND                hWnd;
+	MSG                 msg;
+	WNDCLASS            wndClass;
+	GdiplusStartupInput gdiplusStartupInput;
+	ULONG_PTR           gdiplusToken;
+
+	// Initialize GDI+.
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
+	wndClass.style = CS_HREDRAW | CS_VREDRAW;
+	wndClass.lpfnWndProc = WndProc;
+	wndClass.cbClsExtra = 0;
+	wndClass.cbWndExtra = 0;
+	wndClass.hInstance = hInstance;
+	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wndClass.lpszMenuName = NULL;
+	wndClass.lpszClassName = TEXT("GettingStarted");
+
+	RegisterClass(&wndClass);
+
+	hWnd = CreateWindow(
+		TEXT("GettingStarted"),   // window class name
+		TEXT("Getting Started"),  // window caption
+		WS_OVERLAPPEDWINDOW,      // window style
+		CW_USEDEFAULT,            // initial x position
+		CW_USEDEFAULT,            // initial y position
+		CW_USEDEFAULT,            // initial x size
+		CW_USEDEFAULT,            // initial y size
+		NULL,                     // parent window handle
+		NULL,                     // window menu handle
+		hInstance,                // program instance handle
+		NULL);                    // creation parameters
+
+	ShowWindow(hWnd, iCmdShow);
+	UpdateWindow(hWnd);
+
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	GdiplusShutdown(gdiplusToken);
+	return msg.wParam;
+}  // WinMain
+*/
+/*LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
+	WPARAM wParam, LPARAM lParam)
+{
+	HDC          hdc;
+	PAINTSTRUCT  ps;
+
+	switch (message)
+	{
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps);
+		OnPaint(hdc);
+		EndPaint(hWnd, &ps);
+		return 0;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}*/
